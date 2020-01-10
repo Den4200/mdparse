@@ -1,4 +1,5 @@
 from typing import Dict, Generator, List, TextIO, Tuple
+from .markdown import Markdown
 from .constants import MARKS
 
 
@@ -7,9 +8,11 @@ class Parser:
     def __init__(self, fp: TextIO) -> None:
         self.content = [line.strip('\n') for line in fp.readlines()]
 
-    def parse(self) -> List[List[str]]:
+    def parse(self) -> Markdown:
         """
         Parse a Markdown file and return tokens.
+
+        Returns an instance of the Markdown class.
         """
         lines = list()
 
@@ -32,7 +35,7 @@ class Parser:
         for index, value in combined.items():
             lines.insert(index, ['line', value])
 
-        return lines
+        return Markdown(lines)
 
     @staticmethod
     def _combine_lines(content: List[List[str]]) -> Dict[int, str]:
