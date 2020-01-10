@@ -1,16 +1,44 @@
-from typing import Dict, Generator, List, TextIO, Tuple
+from typing import (
+    Dict, 
+    Generator, 
+    List, 
+    TextIO, 
+    Tuple, 
+    Union
+)
+from io import StringIO
 from .markdown import Markdown
 from .constants import MARKS
 
 
 class Parser:
 
-    def __init__(self, fp: TextIO) -> None:
-        self.content = [line.strip('\n') for line in fp.readlines()]
+    def __init__(self, fp: Union[str, List, TextIO]):
+        """
+        Checks whether fp is a [
+            file pointer,
+            string,
+            list
+        ]
+        """
+        try:
+            self.content = [line.strip('\n') for line in fp.readlines()]
+
+        except AttributeError:
+            
+            if isinstance(fp, str):
+                self.content = fp.splitlines()
+
+            elif isinstance(fp, list):
+                self.content = [line.strip('\n') for line in fp]
+
+            else:
+                raise TypeError('Only accepts a file pointer, list, or string.')
 
     def parse(self) -> Markdown:
         """
-        Parse a Markdown file and return tokens.
+        Parses a Markdown file and passes tokens to
+        a Markdown class instance.
 
         Returns an instance of the Markdown class.
         """
