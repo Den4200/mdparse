@@ -8,7 +8,6 @@ __package__ = 'tests'
 
 import sys
 from pathlib import Path
-from timeit import timeit
 from mdparse.parser import Parser
 
 # ----- #
@@ -25,13 +24,17 @@ with open(Path('tests/example.md'), 'r') as f:
 with open(Path('tests/result.txt'), 'r') as f:
     result = eval(f.read())
 
+with open(Path('tests/result.html'), 'r') as f:
+    html = f.read()
+
 # ----- #
 
 passed = list()
 tests = [
     list(test1) == result, 
     list(test2) == result, 
-    list(test3) == result
+    list(test3) == result,
+    '\n'.join(test1.html()) == html
 ]
 
 for idx, test in enumerate(tests, 1):

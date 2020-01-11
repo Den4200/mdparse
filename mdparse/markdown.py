@@ -1,4 +1,6 @@
 from typing import List
+from .constants import HTML
+
 
 class Markdown:
 
@@ -13,3 +15,46 @@ class Markdown:
 
     def __getitem__(self, item):
         return self._lines[item]
+
+    def html(self):
+        """
+        Converts Markdown to HTML.
+        """
+        html = list()
+
+        ul = list()
+        li = False
+
+        for line in self._lines:
+
+            for key, tag in HTML.items():
+
+                if line[0] == key:
+                    formatted = tag.format(line[1])
+                    print(formatted)
+                    
+
+                    if key == 'bullet':
+                        ul.append(formatted)
+                        li = True
+                    
+                    elif li == True:
+                        html.append(
+                            HTML['ul'].format(''.join([*ul]))
+                        )
+                        html.append(formatted)
+
+                        ul = list()
+                        li = False
+
+                    else:
+                        html.append(formatted)
+                    
+                    break
+
+        if li == True:
+            html.append(
+                HTML['ul'].format(''.join([*ul]))
+            )
+
+        return html

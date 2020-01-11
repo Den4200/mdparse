@@ -6,7 +6,6 @@ from typing import (
     Tuple, 
     Union
 )
-from io import StringIO
 from .markdown import Markdown
 from .constants import MARKS
 
@@ -15,7 +14,8 @@ class Parser:
 
     def __init__(self, fp: Union[str, List, TextIO]):
         """
-        Checks whether fp is a [
+        Checks whether fp is any of these
+        [
             file pointer,
             string,
             list
