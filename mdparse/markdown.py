@@ -30,7 +30,14 @@ class Markdown:
             for key, tag in HTML.items():
 
                 if line[0] == key:
-                    formatted = tag.format(line[1])
+                    words = line[1].split()
+
+                    for idx, word in enumerate(words):
+                        if word[0] == '[' and word[-1] == ')' and '](' in word[1:-1]:
+                            name, link = word.split(']')
+                            words[idx] = HTML['link'].format(name=name[1:], link=link[1:-1])
+
+                    formatted = tag.format(' '.join(words))
 
                     if key == 'bullet':
                         ul.append(formatted)

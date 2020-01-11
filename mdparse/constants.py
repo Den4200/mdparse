@@ -19,5 +19,7 @@ HTML = {
     'ul': '<ul>\n{}</ul>',
     'bullet': '\t<li>{}</li>\n',
 
+    'link': '<a href="{link}" target="_blank">{name}</a>',
+
     'line': '{}'
 }
