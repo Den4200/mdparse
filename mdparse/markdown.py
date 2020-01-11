@@ -31,8 +31,6 @@ class Markdown:
 
                 if line[0] == key:
                     formatted = tag.format(line[1])
-                    print(formatted)
-                    
 
                     if key == 'bullet':
                         ul.append(formatted)
